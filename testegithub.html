@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+  <title>Equipe de Agentes de IA para ChatGPT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@500&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3D3CA5;
+      --secondary: #02CBBB;
+      --accent: #FFB300;
+      --background: #181929;
+      --background-light: #232244;
+      --text: #fff;
+      --text-light: #e3e3e3;
+      --text-dark: #222;
+      --success: #11c76f;
+      --danger: #ff532f;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --background: #f4f7fa;
+        --background-light: #fff;
+        --text: #191939;
+        --text-light: #44465c;
+      }
+    }
+    * {box-sizing:border-box;}
+    html, body {
+      padding:0; margin:0; min-height:100%;
+      font-family: 'Open Sans', Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      font-size: 16px;
+    }
+    a { color:inherit; text-decoration:none; }
+    /* HEADER */
+    .navbar {
+      position: fixed;
+      top:0; left:0; width:100vw; z-index:32;
+      background: linear-gradient(90deg, var(--primary) 60%, var(--background-light) 120%);
+      color: #fff;
+      min-height:52px; height:auto;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 14px #0002;
+    }
+    .navbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width:100%; max-width:1200px; padding: 0 5vw;
+      min-height:52px; height:auto;
+    }
+    .logo {
+      font-family:'Montserrat',Arial,sans-serif;
+      font-size:1.17rem;font-weight:800;letter-spacing:.03em;
+      color:var(--accent);
+    }
+    .navbar-cta {
+      display: inline-block;
+      background:var(--accent);
+      color: #222;
+      padding: .7em 1.65em;
+      border-radius:28px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight:700;
+      font-size: 1rem;
+      margin-left:16px;
+      box-shadow: 0 2px 12px #ffb30033;
+      border:none;
+      cursor:pointer;
+      transition:background .17s, box-shadow .15s;
+    }
+    .navbar-cta:hover {background:#FFC300;}
+    .spacer-navbar {height:52px;}
+    
+    /* CONTAINER */
+    .container {width:100%; max-width:1150px; margin:auto; padding:0 4vw;}
+    section {padding:32px 0 18px 0;}
+    h1,h2,h3,h4 {
+      font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+      margin:0;line-height:1.14;
+    }
+    h1 {font-size:2.2rem; margin-bottom:.5em;}
+    h2 {font-size:1.32rem; margin-bottom:.7em;}
+    h3 {font-size:1.09rem; margin:.78em 0 .35em 0;}
+    p {font-size:1.01rem; color:var(--text-light);}
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--background) 90%);
+      text-align:center;
+      padding:38px 0 19px 0;
+      display: flex; flex-direction:column; align-items:center; justify-content:center;
+    }
+    .hero h1 {color:#fff;font-size:2.1rem;}
+    .hero p {color:var(--text-light); max-width:480px; margin:0 auto 1.2em auto;}
+    .hero-video {width:100%;max-width:390px; margin:1.4em auto 1.8em auto; position:relative;}
+    .hero-video .video-thumb {
+      width:100%; aspect-ratio:16/9;
+      border-radius:var(--radius); box-shadow:0 3px 18px #0003;
+      overflow:hidden; cursor:pointer; position:relative;
+      display:block; min-width:200px; background:#151535;
+    }
+    .hero-video img {width:100%;height:100%;object-fit:cover;}
+    .hero-video .play-btn {
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:54px; height:54px; background:var(--accent);
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      color:#fff; font-size:2.1rem; box-shadow:0 1px 18px #ffc40066;
+      cursor:pointer; border:none;
+    }
+    .hero .cta-btn {
+      background:var(--accent);
+      color:#232244;
+      font-family:'Montserrat',sans-serif;
+      font-size:1rem; font-weight:700;
+      border-radius:30px;
+      padding:1em 2em;
+      margin:0 auto;
+      display:inline-block;
+      border:none;
+      margin-bottom:0;
+      transition:background .17s, box-shadow .17s, color .12s;
+      box-shadow: 0 2px 16px #ffb30026;
+    }
+    .hero .cta-btn:hover {background:#FFC300;}
+    /* Problema/Solução */
+    .probsol-grid {
+      display: flex; flex-wrap: wrap; gap:18px; margin-top:14px; justify-content:center;
+    }
+    .probsol-card {
+      flex:1; min-width:250px; max-width:430px;
+      background: var(--background-light); border-radius: var(--radius);
+      box-shadow: 0 1px 12px #14143a18;
+      padding:1.4em 1.2em; text-align:center;
+      margin:6px 0;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    .probsol-card .icon {font-size:2rem;color:var(--accent);margin-bottom:11px;}
+    /* Para quem é/não é */
+    .audience-grid {
+      display: flex; flex-wrap:wrap;
+      gap:20px; margin-top:20px; justify-content:center;
+    }
+    .aud-card {
+      flex:1; min-width:200px; max-width:380px;
+      background: var(--background-light); border-radius:var(--radius);
+      box-shadow:0 1px 8px #23224422;
+      padding:1.1em 1em 0.8em 1em;  margin:3px 0;
+    }
+    .aud-card h3 {margin:0 0 .5em 0;}
+    .aud-card ul {list-style:none;padding:0;margin:0;}
+    .aud-card li { display:flex;align-items:center;margin-bottom:.7em; font-size:1rem;}
+    .aud-card .ok{color:var(--success);margin-right:10px;}
+    .aud-card .no{color:var(--danger);margin-right:10px;}
+    /* Equipe GRID */
+    .agents-grid {
+      display:grid; gap:13px;
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      margin-top:21px;
+    }
+    .agent-card {
+      background: var(--background-light);
+      border-radius: var(--radius);
+      text-align: center;
+      padding: 1.2em .7em .8em .7em;
+      box-shadow:0 1px 11px #23224418;
+      display:flex; flex-direction:column; align-items:center;
+      min-height:165px;
+    }
+    .agent-icon {
+      font-size:1.5rem; margin-bottom:.5em; color:var(--secondary);background:#e0e0e042;border-radius:50%;
+      width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    }
+    .agent-card strong {font-size:1.06rem;color:var(--primary);}
+    .agent-card p {font-size:.97rem;margin-top:6px;}
+    /* BENEFÍCIOS */
+    .benefits-list {
+      display: grid; grid-template-columns:1fr; gap:18px; margin-top:18px;
+    }
+    @media(min-width:650px) {
+      .benefits-list { grid-template-columns: 1fr 1fr;}
+      .agents-grid {grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}
+      .hero h1 {font-size:2.4rem;}
+      h2 {font-size:1.49rem;}
+    }
+    .benefit-card {
+      display:flex;align-items:flex-start;gap:.8em;
+      background:var(--background-light); border-radius:9px; padding:.8em .9em .7em .9em; box-shadow:0 1px 10px #23224412;
+    }
+    .benefit-icon {font-size:1.5rem;color:var(--accent);}
+    .benefit-content {flex:1;}
+    .benefit-content strong {color:var(--primary);}
+    /* Depoimentos */
+    .testimonials-slider{max-width:530px;margin:0 auto;padding-top:14px;position:relative;}
+    .testimonial-card {
+      background:var(--background-light);border-radius:var(--radius);
+      min-height:137px;padding:1em 1em .7em 1em;
+      display:flex;flex-direction: column;align-items:flex-start;gap:.5em;
+      box-shadow:0 2px 12px #23224422;
+    }
+    .testimonial-user {display: flex;align-items:center;gap:9px;}
+    .testimonial-photo {border-radius:50%;width:36px;height:36px;object-fit:cover;border:2px solid var(--accent);}
+    .testimonial-name {font-size:.98rem;font-weight:600;color:var(--primary);}
+    .testimonial-role {font-size:.87rem;color:var(--secondary);}
+    .testimonial-quote {font-size:1.01rem;font-style:italic;color:var(--text-light);}
+    .testimonial-nav{display:flex;gap:10px;justify-content:center;margin-top:12px;}
+    .testimonial-nav button{width:30px;height:30px;border:none;border-radius:50%;background:var(--accent);color:#fff;font-size:1.1rem;cursor:pointer;}
+    /* Demonstração */
+    .demo-tabs {display:flex;gap:0.3em;margin-top:17px;flex-wrap:wrap;justify-content:center;}
+    .demo-tab-btn {background:none;color:var(--primary);border:2px solid var(--primary);
+      border-radius:24px;padding:.38em 1.1em;font-size:.97rem;cursor:pointer;font-family:'Montserrat',Arial,sans-serif;font-weight:600;margin-bottom:3px;
+      transition:background .13s, color .13s, border .13s;}
+    .demo-tab-btn.active, .demo-tab-btn:hover {background:var(--primary);color:#fff;}
+    .demo-content {margin-top:12px;}
+    .demo-block {background:var(--background-light);border-radius:9px;padding:.8em;margin-bottom:.7em; font-size:.93rem;}
+    .demo-label {color:var(--secondary);font-weight:600;}
+    .demo-code {display:block;white-space:pre-line;background:transparent;border:none;font-family:monospace;color:var(--text);padding:0;}
+    /* Timer (Oferta Limitada) */
+    .timer-section{background: linear-gradient(90deg, var(--accent) 70%, var(--primary) 120%);
+      color:#222; text-align:center;}
+    .timer-box{background:#fff2;padding:6px 10px 7px 10px;border-radius:9px;box-shadow:0 1px 6px #0001;margin:0 1px;}
+    .timer-number{font-size:1.23rem;font-weight:bold;font-family:'Montserrat';color:var(--primary);}
+    .timer-label{font-size:.85rem;opacity:.83;}
+    .price-section {background: linear-gradient(95deg, var(--background-light) 70%, var(--primary) 120%);}
+    /* CTA */
+    .cta-btn {background:var(--accent);color:var(--text-dark);font-family:'Montserrat',Arial,sans-serif;
+      font-size:1.06rem;font-weight:700;border-radius:28px;padding:1em 2em;display:inline-block;border:none;box-shadow:0 2px 13px #ffb3001b;
+      margin:1.1em 0 0 0;text-align:center;transition:background .17s;}
+    .cta-btn:hover {background:#FFC300;}
+    /* Bonus */
+    .bonus-grid {display: grid; grid-template-columns:1fr; gap:14px; margin-top:18px;}
+    @media(min-width:600px){ .bonus-grid {grid-template-columns:1fr 1fr 1fr;} }
+    .bonus-card{background:var(--background-light);border-radius:var(--radius);padding:1em .8em .9em .8em; text-align:center; box-shadow:0 1px 12px #23224414;}
+    .bonus-icon{font-size:2.1rem;color:var(--secondary);margin-bottom:.4em;}
+    .bonus-title{font-family:'Montserrat';font-weight:800;font-size:1rem;color:var(--primary);}
+    .bonus-description{color:var(--text-light);font-size:.95rem;margin-bottom:.6em;}
+    .bonus-price{font-size:1.04rem;color:var(--primary);}
+    /* Garantia */
+    .guarantee-section{text-align:center;padding:24px 0;}
+    .guarantee-section img{width:60px;height:60px;background:#fff;border-radius:60px;border:4px solid var(--success);}
+    /* Sobre */
+    .about-grid {display:flex;align-items:center;gap:17px;flex-wrap:wrap;}
+    .about-pic img {width:58px;height:58px;border-radius:50%;background:#fff;}
+    .about-content {flex:1;min-width:190px;}
+    /* WhatsApp */
+    .wa-float {
+  position: fixed;
+  right: 13px;
+  bottom: 18px;
+  z-index: 99;
+  background: #25D366; /* Verde do WhatsApp */
+  color: #fff;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px #2223;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.65rem;
+  cursor: pointer;
+  border: 3px solid #fff;
+  transition: background .13s;
+}
+.wa-float:hover {
+  background: #1ebe57;
+}
+    .wa-tooltip {
+      position:absolute;bottom:52px;right:0;
+      background:var(--secondary);color:#fff;
+      padding:.5em 1em; border-radius:8px; font-size:.94rem;box-shadow:0 4px 16px #02CBBB33;opacity:0;pointer-events:none;transition:opacity .1s;}
+    .wa-float:hover + .wa-tooltip {opacity:1;}
+    /* FAQ */
+    .faq-section {background:linear-gradient(90deg,var(--background-light) 90%,var(--primary) 120%);}
+    .faq-list {max-width: 650px;margin:0 auto;}
+    .faq-item {background: #fff1; margin-bottom:11px; border-radius: 8px;overflow: hidden; box-shadow:0 2px 7px #0012;}
+    .faq-question {padding: .95em 1.2em .95em 1.2em; font-weight: bold; color:var(--primary);display:flex;align-items:center;justify-content:space-between; cursor:pointer;user-select:none;}
+    .faq-active .faq-question {background:var(--accent);color:var(--text-dark);}
+    .faq-answer {padding: 0 1.4em; color:var(--text-light); font-size:.98rem; border-left:6px solid var(--accent);max-height:0;overflow:hidden;transition:max-height .28s,padding .15s;background:var(--background-light);}
+    .faq-active .faq-answer {max-height:110px;padding: .7em 1.4em ;}
+    .faq-toggle {font-size:1.1rem;transition:transform .2s;}
+    .faq-active .faq-toggle {transform:rotate(45deg);}
+    /* Final CTA */
+    .final-cta-section {text-align:center;padding:32px 0 29px 0;background: linear-gradient(90deg,var(--primary) 75%,var(--secondary) 140%); color:#fff;}
+    .final-cta-section h2 {color:#fff;}
+    /* RODAPÉ */
+    footer {
+      width:100%; background: linear-gradient(90deg, var(--background-light) 75%, var(--primary) 140%);
+      color: var(--text-light); padding: 18px 0 14px 0; font-size: 1rem; text-align:center; margin-top:0;
+      border-top: 2px solid #23224422;
+    }
+    footer .logo {color:var(--primary);}
+    nav.footer-nav a {
+      color:var(--accent);margin:0 11px;text-decoration:none;font-weight:600;font-size:.97rem;
+      transition:color .14s;
+    }
+    nav.footer-nav a:hover {color:var(--primary);}
+    /* MOBILE IMPROVEMENTS */
+    @media (max-width:730px){
+      .hero h1 {font-size:1.3rem;}
+      h2 {font-size:1rem;}
+      section {padding:20px 0 7px 0;}
+      .about-pic img {width:38px;height:38px;}
+      .wa-float { right:7px; bottom:11px; width:38px; height:38px; font-size:1.1rem;}
+      .container {padding:0 3vw;}
+      .hero .cta-btn, .cta-btn, .navbar-cta {font-size:.97rem;padding:.8em 1.3em;}
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <span class="logo">Equipe de Agentes de IA</span>
+      <a href="#checkout" class="navbar-cta">Quero Acessar Todos os Agentes</a>
+    </div>
+  </header>
+  <div class="spacer-navbar"></div>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Transforme Seu ChatGPT em Uma Agência de Especialistas: Marketing, Conteúdo, Web e Mais!</h1>
+    <p>Delegue Tarefas Complexas, Multiplique Sua Produtividade e Alcance Resultados Surpreendentes com Nossa Equipe de Agentes de IA.</p>
+    <div class="hero-video">
+      <div class="video-thumb" onclick="openVideoModal()">
+        <img src="https://img.youtube.com/vi/oJbwjIiiByo/maxresdefault.jpg" alt="Capa do vídeo">
+        <button class="play-btn"><i class="ri-play-fill"></i></button>
+      </div>
+    </div>
+    <a href="#checkout" class="cta-btn">Quero Acessar Todos os Agentes e Bônus Agora!</a>
+  </section>
+
+  <!-- MODAL VIDEO -->
+  <div id="videoModal" style="display:none;position:fixed;z-index:10111;top:0;left:0;width:100vw;height:100vh;background:rgba(11,11,33,0.93);align-items:center;justify-content:center;">
+    <div style="position:relative;width:94vw;max-width:560px;">
+      <span onclick="closeVideoModal()" style="position:absolute;right:-12px;top:-55px;background:var(--accent);color:#222;padding:7px 20px;border-radius:23px;cursor:pointer;z-index:2;font-family:'Montserrat';font-weight:bold;font-size:1rem;">Fechar</span>
+      <iframe id="videoFrame" width="100%" height="325" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius: 10px;"></iframe>
+    </div>
+  </div>
+
+  <!-- PROBLEMA/SOLUÇÃO -->
+  <section>
+    <div class="container probsol-grid">
+      <div class="probsol-card">
+        <div class="icon"><i class="ri-emotion-sad-line"></i></div>
+        <h3>Cansado de Fazer Tudo Sozinho?</h3>
+        <p>Você está sobrecarregado tentando fazer tudo? Marketing, criação, web... Contratar especialistas é caro, tentar tudo sozinho resulta em exaustão e resultados medianos.</p>
+      </div>
+      <div class="probsol-card">
+        <div class="icon"><i class="ri-robot-2-line"></i></div>
+        <h3>Sua Equipe de Especialistas no ChatGPT!</h3>
+        <p>Tenha uma equipe IA disponível 24/7, pronta para executar tarefas com precisão e velocidade. Transforme ideias em realidade!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA QUEM É / NÃO É -->
+  <section>
+    <div class="container">
+      <h2 style="text-align:center;">Para Quem é a Equipe de Agentes de IA?</h2>
+      <div class="audience-grid">
+        <div class="aud-card">
+          <h3>Para Quem É:</h3>
+          <ul>
+            <li><span class="ok"><i class="ri-check-line"></i></span>Empreendedores Digitais</li>
+            <li><span class="ok"><i class="ri-check-line"></i></span>Agências de Marketing</li>
+            <li><span class="ok"><i class="ri-check-line"></i></span>Criadores de Conteúdo</li>
+            <li><span class="ok"><i class="ri-check-line"></i></span>Profissionais de Marketing Digital</li>
+            <li><span class="ok"><i class="ri-check-line"></i></span>Pequenas Empresas</li>
+          </ul>
+        </div>
+        <div class="aud-card">
+          <h3>Para Quem NÃO É:</h3>
+          <ul>
+            <li><span class="no"><i class="ri-close-line"></i></span>Quem busca automação TOTAL sem interação humana</li>
+            <li><span class="no"><i class="ri-close-line"></i></span>Empresas com equipes internas especializadas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPE DE AGENTES -->
+  <section>
+    <div class="container">
+      <h2 style="text-align:center;">Sua Agência de IA Pronta Para Trabalhar:</h2>
+      <div class="agents-grid">
+        <!-- 14 agentes (como na versão anterior, pode personalizar nomes e descrições) -->
+        <div class="agent-card"><div class="agent-icon"><i class="ri-team-line"></i></div><strong>Team Manager</strong><p>Coordena todos os agentes e a execução das tarefas.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-lightbulb-line"></i></div><strong>Estrategista de Marketing</strong><p>Planeja campanhas e propõe ações para resultados rápidos.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-survey-line"></i></div><strong>Copywriter</strong><p>Cria textos e argumentos de vendas para maiores conversões.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-news-line"></i></div><strong>Roteirista de Vídeos</strong><p>Elabora roteiros envolventes para vídeos e podcasts.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-calendar-check-line"></i></div><strong>Gestor de Conteúdo</strong><p>Organiza distribuição estratégica e calendário editorial.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-shield-user-line"></i></div><strong>Especialista em SEO</strong><p>Garante conteúdos otimizados para buscadores.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-search-eye-line"></i></div><strong>Analista de Dados</strong><p>Analisa métricas, sugerindo melhorias baseadas em dados.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-artboard-line"></i></div><strong>Web Designer</strong><p>Desenha layouts e sugestões visuais para páginas.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-code-s-slash-line"></i></div><strong>Desenvolvedor Web</strong><p>Automatiza rotinas e gera códigos para integrações web.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-message-2-line"></i></div><strong>Gestor de Comunidade</strong><p>Gera respostas para engajamento e interação em grupos.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-contacts-book-2-line"></i></div><strong>Relacionamento com Cliente</strong><p>Scripts e estratégias para retenção e satisfação do cliente.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-coupon-3-line"></i></div><strong>Especialista em Ofertas</strong><p>Desenvolve promoções e aumenta o ticket médio.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-chart-line"></i></div><strong>Gestão de Tráfego Pago</strong><p>Estrutura e otimiza anúncios em várias plataformas.</p></div>
+        <div class="agent-card"><div class="agent-icon"><i class="ri-global-line"></i></div><strong>Tradutor & Internacionalização</strong><p>Traduções e adaptação de conteúdo para outros mercados.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFÍCIOS -->
+  <section>
+    <div class="container">
+      <h2 style="text-align:center;">Por Que Escolher a Nossa Equipe de Agentes de IA?</h2>
+      <div class="benefits-list">
+        <div class="benefit-card">
+          <span class="benefit-icon"><i class="ri-brain-line"></i></span>
+          <div class="benefit-content"><strong>Expertise Sob Demanda</strong><div>Tenha especialistas em cada área, sempre que precisar.</div></div>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon"><i class="ri-flashlight-line"></i></span>
+          <div class="benefit-content"><strong>Agilidade e Velocidade</strong><div>Resultados em minutos, não dias.</div></div>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon"><i class="ri-money-dollar-circle-line"></i></span>
+          <div class="benefit-content"><strong>Redução de Custos</strong><div>Menos gastos e mais retorno.</div></div>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon"><i class="ri-shield-check-line"></i></span>
+          <div class="benefit-content"><strong>Consistência e Qualidade</strong><div>Entrega profissional em todas as frentes.</div></div>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon"><i class="ri-bar-chart-grouped-line"></i></span>
+          <div class="benefit-content"><strong>Escalabilidade</strong><div>Cresça sem limites, sem aumentar equipe.</div></div>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon"><i class="ri-link-m"></i></span>
+          <div class="benefit-content"><strong>Integração Perfeita</strong><div>Totalmente pronto pro ChatGPT no seu dia a dia.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- DEPOIMENTOS -->
+  <section>
+    <div class="container">
+      <h2 style="text-align:center;">Veja o Que Nossos Clientes Estão Dizendo:</h2>
+      <div class="testimonials-slider" id="testimonials-slider">
+        <div class="testimonial-card" style="display:flex;">
+          <div class="testimonial-user">
+            <img class="testimonial-photo" src="https://randomuser.me/api/portraits/men/16.jpg" alt="Foto do cliente"/>
+            <div><div class="testimonial-name">Carlos A.</div><div class="testimonial-role">Empreendedor</div></div>
+          </div>
+          <div class="testimonial-quote">"Com o Estrategista de Marketing e o Team Manager, organizei campanhas e aumentei a produtividade!"</div>
+        </div>
+        <div class="testimonial-card" style="display:none;">
+          <div class="testimonial-user">
+            <img class="testimonial-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt=""/>
+            <div><div class="testimonial-name">Juliana P.</div><div class="testimonial-role">Agência Digital</div></div>
+          </div>
+          <div class="testimonial-quote">"Os roteiros de vídeo e textos de vendas aumentaram muito a conversão."</div>
+        </div>
+        <div class="testimonial-card" style="display:none;">
+          <div class="testimonial-user">
+            <img class="testimonial-photo" src="https://randomuser.me/api/portraits/men/22.jpg" alt=""/>
+            <div><div class="testimonial-name">Renato G.</div><div class="testimonial-role">Pequeno Empresário</div></div>
+          </div>
+          <div class="testimonial-quote">"É como ter uma agência trabalhando no meu negócio 24h."</div>
+        </div>
+        <div class="testimonial-nav">
+          <button onclick="changeTestimonial(-1)"><i class="ri-arrow-left-s-line"></i></button>
+          <button onclick="changeTestimonial(1)"><i class="ri-arrow-right-s-line"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- DEMONSTRAÇÃO -->
+  <section>
+    <div class="container">
+      <h2 style="text-align:center;">Veja os Agentes em Ação (Exemplos Práticos)</h2>
+      <div class="demo-tabs" id="demo-tabs">
+        <button class="demo-tab-btn active" data-tab="marketing" onclick="showDemoTab('marketing')">Estrategista de Marketing</button>
+        <button class="demo-tab-btn" data-tab="copy" onclick="showDemoTab('copy')">Copywriter</button>
+        <button class="demo-tab-btn" data-tab="seo" onclick="showDemoTab('seo')">SEO</button>
+        <button class="demo-tab-btn" data-tab="traffico" onclick="showDemoTab('traffico')">Gestão de Tráfego</button>
+      </div>
+      <div class="demo-content" id="demo-marketing">
+        <div class="demo-block"><span class="demo-label">Exemplo:</span>
+          <pre class="demo-code">[Briefing]: Lançar curso online de produtividade.
+[Sugestão do Agente]:
+1. Definir público-alvo
+2. Promessa central e diferenciais
+3. Sequência de e-mails de pré-lançamento
+4. Sugestão de criativos para anúncios</pre>
+        </div>
+      </div>
+      <div class="demo-content" id="demo-copy" style="display:none;">
+        <div class="demo-block"><span class="demo-label">Exemplo:</span>
+          <pre class="demo-code">Headline:
+"Desperte sua alta performance com métodos das maiores empresas!"
+
+Subheadline:
+"Aprenda com IA sem precisar de experiência ou grandes investimentos."</pre>
+        </div>
+      </div>
+      <div class="demo-content" id="demo-seo" style="display:none;">
+        <div class="demo-block"><span class="demo-label">Exemplo:</span>
+          <pre class="demo-code">[Palavra-chave]: Curso produtividade online
+[Sugestão SEO]:
+- Título H1
+- Meta-description otimizada
+- Estrutura com FAQs e CTAs</pre>
+        </div>
+      </div>
+      <div class="demo-content" id="demo-traffico" style="display:none;">
+        <div class="demo-block"><span class="demo-label">Exemplo:</span>
+          <pre class="demo-code">[Objetivo]: Vendas em lançamento de curso
+[Plano]:
+- Públicos lookalike
+- Segmentação por interesse
+- Anúncios e retargeting</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- TIMER -->
+  <section class="timer-section">
+    <h2>Oferta Especial Por Tempo Limitado:</h2>
+    <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+      <div class="timer-box"><div id="timer-days" class="timer-number">00</div><div class="timer-label">Dias</div></div>
+      <div class="timer-box"><div id="timer-hours" class="timer-number">00</div><div class="timer-label">Horas</div></div>
+      <div class="timer-box"><div id="timer-mins" class="timer-number">00</div><div class="timer-label">Minutos</div></div>
+      <div class="timer-box"><div id="timer-secs" class="timer-number">00</div><div class="timer-label">Segundos</div></div>
+    </div>
+  </section>
+  <!-- PREÇO -->
+  <section class="price-section" id="checkout">
+    <div class="container" style="text-align:center;">
+      <h2>Tenha Sua Própria Agência de IA Hoje Mesmo!</h2>
+      <div style="margin-top:1em;margin-bottom:.8em;font-size:1.08rem; color:var(--text-light);">Acesso Ilimitado a Todos os 14 Agentes de IA Por Apenas:</div>
+      <div style="font-size:2.1rem; font-weight:bold; color:var(--accent);margin-bottom:.2em;">R$ 497/mês</div>
+      <div style="color:var(--secondary);font-size:.95rem;margin-bottom:1em;"><s>R$ 997/mês</s>&nbsp; <span style="font-weight:600;">Oferta especial!</span></div>
+      <a href="https://chatgpt.com/" class="cta-btn" style="font-size:1.12rem;">Quero Acessar Todos os Agentes Agora!</a>
+    </div>
+  </section>
+  <!-- BÔNUS -->
+  <section>
+    <div class="container">
+      <h2 style="text-align:center;">Bônus Exclusivos:</h2>
+      <div class="bonus-grid">
+        <div class="bonus-card"><div class="bonus-icon"><i class="ri-book-mark-line"></i></div><div class="bonus-title">Biblioteca de Prompts</div><div class="bonus-description">Mais de 100 prompts para turbinar resultados.</div><div class="bonus-price"><s>R$ 997</s> <span style="color:var(--success);font-weight:700;">Grátis!</span></div></div>
+        <div class="bonus-card"><div class="bonus-icon"><i class="ri-graduation-cap-line"></i></div><div class="bonus-title">Curso Completo ChatGPT</div><div class="bonus-description">Treinamento para extrair tudo do ChatGPT.</div><div class="bonus-price"><s>R$ 1497</s> <span style="color:var(--success);font-weight:700;">Grátis!</span></div></div>
+        <div class="bonus-card"><div class="bonus-icon"><i class="ri-chat-smile-2-line"></i></div><div class="bonus-title">Consultoria Individual</div><div class="bonus-description">Sessão 1:1 para personalização dos agentes.</div><div class="bonus-price"><s>R$ 1997</s> <span style="color:var(--success);font-weight:700;">Grátis!</span></div></div>
+      </div>
+      <div style="text-align:center;font-size:1.06rem;margin:1.2em 0 .7em 0;">
+        <strong style="color:var(--primary);">Valor total: R$ 4991!</strong><br>
+        <span>Mas você leva tudo isso por <strong style="color:var(--accent);">R$ 497/mês!</strong></span>
+      </div>
+      <div style="text-align:center;">
+        <a href="https://chatgpt.com/" class="cta-btn">Quero Acessar Todos os Agentes e Bônus Agora!</a>
+      </div>
+    </div>
+  </section>
+  <!-- GARANTIA -->
+  <section class="guarantee-section">
+    <div class="container">
+      <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Garantia 30 dias" />
+      <h2>Seu Risco é ZERO!</h2>
+      <div style="color:var(--text-light);font-size:1.01rem;">Experimente sem riscos. Se não estiver satisfeito, reembolsamos em até 30 dias.</div>
+    </div>
+  </section>
+  <!-- SOBRE -->
+  <section>
+    <div class="container about-grid">
+      <div class="about-pic"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Equipe de IA"></div>
+      <div class="about-content">
+        <h2>Quem Somos Nós?</h2>
+        <div><strong>Equipe de Agentes de IA</strong> é formada por apaixonados por tecnologia, automação e alta performance. Levamos consultoria premium a negócios de todos os tamanhos.</div>
+      </div>
+    </div>
+  </section>
+  <!-- WHATSAPP -->
+  <a href="https://wa.me/5500000000000" class="wa-float" target="_blank" aria-label="Fale conosco no WhatsApp"><i class="ri-whatsapp-line"></i></a><span class="wa-tooltip">Tem Alguma Dúvida? Fale Conosco Agora!</span>
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <h2 style="text-align:center;">Perguntas Frequentes</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">Preciso do ChatGPT Plus para usar os agentes? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">Não! Você pode utilizar os agentes independente da assinatura Plus.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Os agentes recebem atualizações? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">Sim. Sempre que houver melhorias, você recebe acesso sem custo extra.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">O que faz o Team Manager? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">Coordena os demais agentes, organizando demandas e prazos.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">E se eu não gostar? <span class="faq-toggle">+</span></div>
+          <div class="faq-answer">Seu risco é zero: reembolso em até 30 dias, sem burocracia.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA FINAL -->
+  <section class="final-cta-section">
+    <h2>Pronto Para Multiplicar Sua Produtividade Com IA?</h2>
+    <p>Não perca mais tempo. Deixe a Equipe de Agentes de IA trabalhar por você!</p>
+    <a href="https://chatgpt.com/" class="cta-btn">Quero Acessar Todos os Agentes e Bônus Agora!</a>
+  </section>
+  <!-- RODAPÉ -->
+  <footer>
+    <div>
+      <span class="logo" style="font-family:'Montserrat';font-weight:700;font-size:1.04rem;letter-spacing:.02em;">Equipe de Agentes de IA</span><br>
+      <nav class="footer-nav">
+        <a href="#checkout">Acessar Agora</a>
+        <a href="#faq">FAQ</a>
+        <a href="mailto:contato@suamarca.com">Contato</a>
+      </nav>
+      <div style="opacity:.8;font-size:.95rem;margin:7px 0 2px 0;">
+        &copy; 2025 Equipe de Agentes de IA. Todos os direitos reservados.
+      </div>
+      <div style="opacity:.59;font-size:.87rem;">
+        Site não oficial do ChatGPT ou OpenAI.<br>
+        Feito com ❤ para sua revolução digital.
+      </div>
+    </div>
+  </footer>
+  <!-- SCRIPTS -->
+  <script>
+    // Modal Vídeo
+    function openVideoModal() {
+      document.getElementById('videoModal').style.display = 'flex';
+      document.getElementById('videoFrame').src = "https://www.youtube.com/embed/oJbwjIiiByo?autoplay=1&start=4";
+      document.body.style.overflow='hidden';
+    }
+    function closeVideoModal() {
+      document.getElementById('videoModal').style.display = 'none';
+      document.getElementById('videoFrame').src = "";
+      document.body.style.overflow='unset';
+    }
+    document.getElementById('videoModal').addEventListener('click', function(e){
+      if(e.target === this) closeVideoModal();
+    });
+    // Slider Depoimentos
+    var currentTestimonial = 0;
+    var testimonialCards = document.querySelectorAll('.testimonial-card');
+    function showTestimonial(idx){
+      testimonialCards.forEach((card,i) => card.style.display = i === idx ? 'flex' : 'none');
+    }
+    function changeTestimonial(step){
+      currentTestimonial += step;
+      if(currentTestimonial < 0) currentTestimonial = testimonialCards.length - 1;
+      if(currentTestimonial >= testimonialCards.length) currentTestimonial = 0;
+      showTestimonial(currentTestimonial);
+    }
+    showTestimonial(currentTestimonial);
+    // Tabs Demonstração
+    function showDemoTab(tab){
+      ['marketing','copy','seo','traffico'].forEach(id=>{
+        document.getElementById('demo-'+id).style.display = id===tab?'block':'none';
+        let btn = document.querySelector('.demo-tab-btn[data-tab="'+id+'"]');
+        if(btn) btn.classList.toggle('active', id===tab);
+      });
+    }
+    // Contador regressivo (7 dias)
+    var limitDate = new Date(); limitDate.setDate(limitDate.getDate()+7);
+    function updateTimer(){
+      var now = new Date().getTime();
+      var distance = limitDate.getTime() - now;
+      if(distance<0) distance=0;
+      var d = Math.floor(distance/(1000*60*60*24));
+      var h = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+      var m = Math.floor((distance%(1000*60*60))/(1000*60));
+      var s = Math.floor((distance%(1000*60))/1000);
+      document.getElementById('timer-days').innerText=d.toString().padStart(2,'0');
+      document.getElementById('timer-hours').innerText=h.toString().padStart(2,'0');
+      document.getElementById('timer-mins').innerText=m.toString().padStart(2,'0');
+      document.getElementById('timer-secs').innerText=s.toString().padStart(2,'0');
+    }
+    updateTimer();
+    setInterval(updateTimer,1000);
+    // FAQ acordião
+    document.querySelectorAll('.faq-question').forEach(q=>{
+      q.addEventListener('click', function(){
+        let p = this.parentElement;
+        p.classList.toggle('faq-active');
+      });
+    });
+  </script>
+  <script>
+  window.onload = function() {
+    setTimeout(function(){
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }, 10);
+  };
+</script>
+</body>
+</html>
